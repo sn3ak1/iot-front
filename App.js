@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { Amplify, PubSub, Auth } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports'
 
-Amplify.configure(awsconfig)
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+})
 
 Amplify.addPluggable(
   new AWSIoTProvider({
@@ -31,9 +36,7 @@ function App() {
       error: error => console.error(error),
       complete: () => console.log('Done'),
     });
-
-    // PubSub.publish('myTopic1', { msg: 'Hello to all subscribers!' });
-
+    // PubSub.publish('sdkTest/pub', { msg: 'Hello to all subscribers!' });
 
   }, [])
 
@@ -41,6 +44,9 @@ function App() {
   return (
     <View style={styles.container}>
       <Text>Test</Text>
+      <Button title="send" onPress={() => {
+        PubSub.publish('sdkTest/pub', { msg: 'Hello to all subscribers!' });
+      }} />
       <StatusBar style="auto" />
     </View>
   );
