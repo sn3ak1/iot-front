@@ -22,7 +22,7 @@
         },
         "tempsLambda": {
           "deploymentBucketName": "amplify-iot-dev-163512-deployment",
-          "s3Key": "amplify-builds/tempsLambda-693262324a7230384436-build.zip"
+          "s3Key": "amplify-builds/tempsLambda-5652616155374b523457-build.zip"
         }
       },
       "storage": {

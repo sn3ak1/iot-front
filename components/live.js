@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Button, ScrollView, StyleSheet, Text, View, Dimensions } from 'react-native';
-import { Amplify, PubSub, Auth, API } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub';
-import { withAuthenticator } from 'aws-amplify-react-native';
-import awsconfig from '../src/aws-exports'
+import { StyleSheet, View, Dimensions } from 'react-native';
+import { PubSub } from 'aws-amplify';
 import {
     LineChart,
 } from "react-native-chart-kit";
@@ -19,9 +15,7 @@ export default function Live() {
 
         const sub = PubSub.subscribe('device/0/data').subscribe({
             next: x => {
-                const test = [...data, { timestamp: Date.now(), temperature: x.value.Temperature }]
-                setData(prev => [...prev, { timestamp: Date.now(), temperature: x.value.Temperature }]);
-                console.log(test)
+                setData(prev => [...prev, { timestamp: Date.now(), temperature: x.value.temperature }]);
             },
             error: error => console.error(error),
             complete: () => console.log('Message received'),
