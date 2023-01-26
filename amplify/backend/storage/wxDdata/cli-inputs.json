@@ -1,0 +1,10 @@
+{
+  "resourceName": "wxDdata",
+  "tableName": "wx_data",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

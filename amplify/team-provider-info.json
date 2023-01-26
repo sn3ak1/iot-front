@@ -14,6 +14,22 @@
     "categories": {
       "auth": {
         "iot8eeba547": {}
+      },
+      "function": {
+        "mylambda": {
+          "deploymentBucketName": "amplify-iot-dev-163512-deployment",
+          "s3Key": "amplify-builds/mylambda-4f70774b3875542b4c73-build.zip"
+        },
+        "tempsLambda": {
+          "deploymentBucketName": "amplify-iot-dev-163512-deployment",
+          "s3Key": "amplify-builds/tempsLambda-693262324a7230384436-build.zip"
+        }
+      },
+      "storage": {
+        "wxDdata": {}
+      },
+      "api": {
+        "tempsApi": {}
       }
     }
   }

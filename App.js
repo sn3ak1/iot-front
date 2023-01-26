@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, ScrollView, StyleSheet, Text, View, Dimensions } from 'react-native';
-import { Amplify, PubSub, Auth } from 'aws-amplify';
+import { Amplify, PubSub, Auth, API } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports'
 import {
   LineChart,
 } from "react-native-chart-kit";
+import { Temperatures } from './components/temperatures'
+import Live from './components/live';
+import History from './components/history';
 
 
 
@@ -28,68 +31,21 @@ Amplify.addPluggable(
 
 function App() {
 
-  [messages, setMessages] = useState([0, 1])
-
-  useEffect(() => {
-
-    Auth.currentCredentials().then((info) => {
-      const cognitoIdentityId = info.identityId;
-      console.log('cognitoIdentityId', cognitoIdentityId);
-    });
-
-
-    PubSub.subscribe('sdkTest/sub').subscribe({
-      next: data => setMessages([...messages, data.value.Temperature]),
-      error: error => console.error(error),
-      complete: () => console.log('Message received'),
-    });
-
-  }, [])
-
+  const [historyFlag, setHistoryFlag] = useState(false)
 
   return (
     <View style={styles.container}>
-      <Button title="send" onPress={() => {
-        PubSub.publish('sdkTest/pub', { msg: 'Hello to all subscribers!' });
-      }} />
-      <LineChart
-        data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              data: messages
-            }
-          ]
-        }}
-        width={Dimensions.get("window").width} // from react-native
-        height={220}
-        yAxisLabel="ºC"
-        yAxisInterval={1} // optional, defaults to 1
-        chartConfig={{
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#fb8c00",
-          backgroundGradientTo: "#ffa726",
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16
-          },
-          propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#ffa726"
-          }
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16
-        }}
-      />
-      <ScrollView>
-        {messages.map((msg, index) => <Text key={index}>{msg} </Text>)}
-      </ScrollView>
+      <View style={styles.buttons}>
+        <Button title="send" onPress={() => {
+          PubSub.publish('device/0/data', { msg: 'wyslalem2!' });
+        }} />
+        <Button title={historyFlag ? "Live" : "History"} onPress={() => {
+          setHistoryFlag(!historyFlag)
+        }} />
+      </View>
+
+      {historyFlag ? <History style={styles.temperatures} /> : <Live style={styles.temperatures} />}
+
       <StatusBar style="auto" />
     </View>
   );
@@ -109,4 +65,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttons: {
+    flexDirection: 'row',
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  temperatures: {
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  temperaturesItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  }
 });

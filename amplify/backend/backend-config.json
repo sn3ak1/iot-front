@@ -1,4 +1,20 @@
 {
+  "api": {
+    "tempsApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "tempsLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "iot8eeba547": {
       "customAuth": false,
@@ -23,6 +39,83 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "mylambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "wxDdata"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "tempsLambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "wxDdata"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_mylambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mylambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_mylambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mylambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_tempsLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "tempsLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_tempsLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "tempsLambda"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "wxDdata": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     }
   }
 }

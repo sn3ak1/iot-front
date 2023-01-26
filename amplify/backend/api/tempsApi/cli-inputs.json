@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/temps": {
+      "name": "/temps",
+      "lambdaFunction": "tempsLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
