@@ -5,8 +5,8 @@ import { Amplify, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports'
-import Live from './components/live';
-import History from './components/history';
+import LiveView from './components/liveView';
+import HistoryView from './components/historyView';
 
 
 
@@ -40,7 +40,7 @@ function App() {
         }} />
       </View>
 
-      {historyFlag ? <History style={styles.temperatures} /> : <Live style={styles.temperatures} />}
+      {historyFlag ? <HistoryView style={styles.temperatures} /> : <LiveView style={styles.temperatures} />}
 
       <StatusBar style="auto" />
     </View>

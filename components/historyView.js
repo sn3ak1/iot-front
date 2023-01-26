@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { API } from 'aws-amplify';
 import { Temperatures } from './temperatures'
+import Chart from './chart';
 
 
-export default function History() {
+export default function HistoryView() {
 
     const [data, setData] = useState([])
 
@@ -28,6 +29,7 @@ export default function History() {
 
     return (
         <View style={styles.container}>
+            <Chart data={data} />
             <Temperatures style={styles.temperatures} data={data} />
         </View>
     );
