@@ -1,0 +1,10 @@
+{
+  "resourceName": "userdevice",
+  "tableName": "userdevice",
+  "partitionKey": {
+    "fieldName": "userID",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

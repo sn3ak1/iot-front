@@ -5,16 +5,15 @@ import { Temperatures } from './temperatures'
 import Chart from './chart';
 
 
-export default function HistoryView() {
+export default function HistoryView({ deviceID }) {
 
     const [data, setData] = useState([])
 
     useEffect(() => {
 
-        API.get('tempsApi', '/temps/?device_id=0', {}).then(result => {
+        API.get('tempsApi', '/temps/?device_id=' + deviceID, {}).then(result => {
             const temp = JSON.parse(result.body)
             setData(temp.map(item => {
-                console.log(item)
                 return {
                     timestamp: item.sample_time,
                     temperature: item.device_data.temperature

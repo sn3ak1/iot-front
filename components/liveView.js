@@ -5,13 +5,13 @@ import { Temperatures } from './temperatures'
 import Chart from './chart';
 
 
-export default function LiveView() {
+export default function LiveView({ deviceID }) {
 
     const [data, setData] = useState([])
 
     useEffect(() => {
 
-        const sub = PubSub.subscribe('device/0/data').subscribe({
+        const sub = PubSub.subscribe(`device/${deviceID}/data`).subscribe({
             next: x => {
                 setData(prev => [...prev, { timestamp: Date.now(), temperature: x.value.temperature }]);
             },

@@ -13,6 +13,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "userdevice": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "userdeviceLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -76,6 +90,25 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "userdeviceLambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "userdevice"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -110,9 +143,29 @@
           "resourceName": "tempsLambda"
         }
       ]
+    },
+    "AMPLIFY_function_userdeviceLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "userdeviceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_userdeviceLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "userdeviceLambda"
+        }
+      ]
     }
   },
   "storage": {
+    "userdevice": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "wxDdata": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"

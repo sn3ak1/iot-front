@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/userdevice": {
+      "name": "/userdevice",
+      "lambdaFunction": "userdeviceLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
