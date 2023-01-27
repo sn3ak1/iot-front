@@ -60,14 +60,10 @@ function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <Button title="send" onPress={() => {
-          PubSub.publish('device/0/data', { msg: 'wyslalem2!' });
-        }} />
-        <Button title={historyFlag ? "Live" : "History"} onPress={() => {
-          setHistoryFlag(!historyFlag)
-        }} />
-      </View>
+
+      <Button title={historyFlag ? "Go to live view" : "Go to history view"} onPress={() => {
+        setHistoryFlag(!historyFlag)
+      }} />
 
       {historyFlag ?
         <HistoryView deviceID={deviceID} style={styles.temperatures} /> :
@@ -91,13 +87,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttons: {
-    flexDirection: 'row',
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-around',
-    marginTop: 10,
   },
   temperatures: {
     width: '100%',
